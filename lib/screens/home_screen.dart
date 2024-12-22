@@ -43,6 +43,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
+  // Function to apply color filtering to the images
+  Widget _buildImageIcon(String assetPath, bool isSelected) {
+    return ColorFiltered(
+      colorFilter: isSelected
+          ? ColorFilter.mode(AppColors.selectedColor, BlendMode.srcIn)
+          : ColorFilter.mode(AppColors.unselectedColor, BlendMode.srcIn),
+      child: Image.asset(
+        assetPath,
+        width: 30, // Adjust the size as needed
+        height: 30, // Adjust the size as needed
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
       ),
+      
       bottomNavigationBar: Stack(
         children: [
           BottomNavigationBar(
@@ -115,47 +131,46 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 icon: Icon(Icons.home),
                 label: 'Home',
               ),
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Order',
-              ),
+              
+              // BottomNavigationBarItem(
+              //   icon: SizedBox(
+              //     height: 30, // Adjust size as needed
+              //     width: 30, // Adjust size as needed
+              //     child: Image.asset(
+              //       'assets/images/order.png',
+              //       fit: BoxFit.cover, // Make sure the image fits well
+              //     ),
+              //   ),
+              //   label: 'Request',
+              // ),
+
               BottomNavigationBarItem(
-                icon: SizedBox(
-                  height: 30, // Adjust size as needed
-                  width: 30, // Adjust size as needed
-                  child: Image.asset(
-                    'assets/images/bubble-chat.gif',
-                    fit: BoxFit.cover, // Make sure the image fits well
-                  ),
-                ),
+                icon: _buildImageIcon(
+                    'assets/images/order.png', _selectedIndex == 1),
+                label: 'Request',
+              ),
+
+              // BottomNavigationBarItem(
+              //   icon: SizedBox(
+              //     height: 30, // Adjust size as needed
+              //     width: 30, // Adjust size as needed
+              //     child: Image.asset(
+              //       'assets/images/bubble-chat.gif',
+              //       fit: BoxFit.cover, // Make sure the image fits well
+              //     ),
+              //   ),
+              //   label: 'Chat',
+              // ),
+
+              BottomNavigationBarItem(
+                icon: _buildImageIcon(
+                    'assets/images/bubble-chat.gif', _selectedIndex == 2),
                 label: 'Chat',
               ),
+
+
+              
             ],
-          ),
-          // Bouncy FAB using AnimatedPositioned
-          Positioned(
-            bottom: 0,
-            left: MediaQuery.of(context).size.width / 2 -
-                30, // Center it horizontally
-            child: AnimatedBuilder(
-              animation: _bounceAnimation,
-              builder: (context, child) {
-                return Transform.translate(
-                  offset:
-                      Offset(0, _bounceAnimation.value), // The bouncy effect
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      // Navigate to the order page or show an action sheet for selecting the service
-                      print("Order mechanic/service");
-                    },
-                    backgroundColor:
-                        Theme.of(context).primaryColor, // Use the primary color
-                    child:
-                        const Icon(Icons.add, color: Colors.white), // Plus icon
-                  ),
-                );
-              },
-            ),
           ),
         ],
       ),

@@ -62,9 +62,10 @@ flutter:
   assets:
     - assets/images/splash_image.png
     - assets/images/logo.png
+    - assets/images/order.png
     - assets/images/side_menu.gif
     - assets/images/bubble-chat.gif
-  #   - images/a_dot_burr.jpeg
+    - assets/images/spare-parts.gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
