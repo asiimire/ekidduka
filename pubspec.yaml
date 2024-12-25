@@ -35,6 +35,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  carousel_slider: ^5.0.0
+  smooth_page_indicator: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +68,10 @@ flutter:
     - assets/images/side_menu.gif
     - assets/images/bubble-chat.gif
     - assets/images/spare-parts.gif
-  #   - images/a_dot_ham.jpeg
+    - assets/images/slider1.jpg
+    - assets/images/slider2.jpg
+    - assets/images/slider3.jpg
+    # - assets/images/placeholder.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

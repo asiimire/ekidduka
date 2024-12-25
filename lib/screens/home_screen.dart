@@ -1,7 +1,9 @@
+// ignore_for_file: dead_code
+
 import 'package:ekidduka/theme/colors.dart';
 import 'package:ekidduka/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:ekidduka/widgets/custom_button.dart'; // For reusable custom buttons
+// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
@@ -15,28 +17,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int _selectedIndex = 0;
 
-  // Declare the AnimationController and Animation variables properly
-  late AnimationController _animationController;
-  late Animation<double> _bounceAnimation;
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
     super.initState();
-
-    // Initialize the AnimationController and Animation
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 2), // Duration of the bounce
-      vsync: this,
-    )..repeat(reverse: true); // Repeat the animation (bounce back and forth)
-
-    _bounceAnimation = Tween<double>(begin: 0, end: -10).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.elasticInOut, // Bouncy effect curve
-      ),
-    );
   }
 
+  
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -45,78 +33,138 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   // Function to apply color filtering to the images
   Widget _buildImageIcon(String assetPath, bool isSelected) {
-    return ColorFiltered(
+  return SizedBox(
+    width: 32, // Standard size for BottomNavigationBar icons
+    height: 32,
+    child: ColorFiltered(
       colorFilter: isSelected
-          ? ColorFilter.mode(AppColors.selectedColor, BlendMode.srcIn)
-          : ColorFilter.mode(AppColors.unselectedColor, BlendMode.srcIn),
+          ? const ColorFilter.mode(AppColors.selectedColor, BlendMode.srcIn)
+          : const ColorFilter.mode(AppColors.unselectedColor, BlendMode.srcIn),
       child: Image.asset(
         assetPath,
-        width: 30, // Adjust the size as needed
-        height: 30, // Adjust the size as needed
-        fit: BoxFit.cover,
+        fit: BoxFit.contain, // Ensures the image fits within its bounds
       ),
-    );
-  }
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Hello, Welcome to Ekidduka!",
+      body: Column(
+        crossAxisAlignment:
+            CrossAxisAlignment.start, // Align content to the left
+        children: [
+          // Greeting Section
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+            child: Text(
+              "Good Morning, Patricia!", // Replace with dynamic name if needed
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 22, // Adjust font size
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.color, // Using text color from theme
+                color: AppColors.blackColor,
+                // backgroundColor: AppColors.whiteColor // Use your theme's text color
               ),
             ),
-            const SizedBox(height: 20),
-            Text(
-              "Your one-stop solution for car services and more.",
-              style: TextStyle(
-                fontSize: 18,
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.color, // Using body text color
-              ),
+          ),
+
+          // My Wallet Card
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
             ),
-            const SizedBox(height: 40),
-            CustomButton(
-              text: "View Services", // Button text
-              onPressed: () {
-                // TODO: Implement navigation to services page
-                print("Navigate to services page");
-              },
+            color: Theme.of(context)
+                .primaryColor, // Use theme color for the top part
+
+            child: Column(
+              children: [
+                // Top half with primary color
+                Container(
+                  width: double.infinity,
+                  color: Theme.of(context)
+                      .primaryColor, // Primary color for the top
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "My Wallet",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "UGX 50,000",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors
+                                  .whiteColor, // Use white for the text
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              // Add action for viewing balance details
+                            },
+                            icon: const Icon(Icons.info, size: 24),
+                            color: AppColors
+                                .whiteColor, // Set the icon color to white
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16.0),
+                    ],
+                  ),
+                ),
+                // Bottom half with white color
+                Container(
+                  width: double.infinity,
+                  color: Colors.white, // White color for the bottom half
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      // Deposit Money Button
+                      SizedBox(
+                        width: double.infinity, // Full-width button
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Add action for deposit money
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.buttonColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12.0), // Adjust height
+                          ),
+                          child: const Text(
+                            "Deposit Money",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            CustomButton(
-              text: "Book Appointment", // Button text
-              onPressed: () {
-                // TODO: Implement navigation to booking page
-                print("Navigate to booking page");
-              },
-            ),
-            const SizedBox(height: 20),
-            CustomButton(
-              text: "Payment History", // Button text
-              onPressed: () {
-                // TODO: Implement navigation to payment history page
-                print("Navigate to payment history page");
-              },
-            ),
-          ],
-        ),
+          ),
+
+        ],
       ),
-      
       bottomNavigationBar: Stack(
         children: [
           BottomNavigationBar(
@@ -131,45 +179,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 icon: Icon(Icons.home),
                 label: 'Home',
               ),
-              
-              // BottomNavigationBarItem(
-              //   icon: SizedBox(
-              //     height: 30, // Adjust size as needed
-              //     width: 30, // Adjust size as needed
-              //     child: Image.asset(
-              //       'assets/images/order.png',
-              //       fit: BoxFit.cover, // Make sure the image fits well
-              //     ),
-              //   ),
-              //   label: 'Request',
-              // ),
-
               BottomNavigationBarItem(
                 icon: _buildImageIcon(
-                    'assets/images/order.png', _selectedIndex == 1),
-                label: 'Request',
+                    'assets/images/side_menu.gif', _selectedIndex == 1),
+                label: 'MotoFix',
               ),
-
-              // BottomNavigationBarItem(
-              //   icon: SizedBox(
-              //     height: 30, // Adjust size as needed
-              //     width: 30, // Adjust size as needed
-              //     child: Image.asset(
-              //       'assets/images/bubble-chat.gif',
-              //       fit: BoxFit.cover, // Make sure the image fits well
-              //     ),
-              //   ),
-              //   label: 'Chat',
-              // ),
-
               BottomNavigationBarItem(
                 icon: _buildImageIcon(
                     'assets/images/bubble-chat.gif', _selectedIndex == 2),
                 label: 'Chat',
               ),
-
-
-              
             ],
           ),
         ],
@@ -180,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed
-    _animationController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 ThemeData theme() {
   return ThemeData(
     primaryColor: AppColors.primaryColor,  // Yellow color
-    scaffoldBackgroundColor: AppColors.backgroundColor,  // White for general background
+    scaffoldBackgroundColor: AppColors.whiteColor,  // White for general background
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primaryColor, // App bar uses the yellow color
       elevation: 0,  // Remove shadow under the app bar
