@@ -4,7 +4,6 @@ import 'package:ekidduka/theme/colors.dart';
 import 'package:ekidduka/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-
 class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
 
@@ -18,6 +17,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int _selectedIndex = 0;
 
   final PageController _pageController = PageController();
+
+  // 2. Define the list of pages for navigation
+  final List<Widget> _pages = [
+    // MotoFixPage(), // Home Page (Landing Page)
+    // HistoryPage(),  // Placeholder for History (or skip this)
+    // ProfilePage(), // Profile Page from profile_page.dart
+  ];
 
   @override
   void initState() {
@@ -103,152 +109,173 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start, // Align content to the left
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index; // update the selected index
+          });
+        },
         children: [
-          // Greeting Section
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-            child: Text(
-              "Good Morning, Patricia!", // Replace with dynamic name if needed
-              style: TextStyle(
-                fontSize: 22, // Adjust font size
-                fontWeight: FontWeight.bold,
-                color: AppColors.blackColor,
-                // backgroundColor: AppColors.whiteColor // Use your theme's text color
+          // HistoryPage(), // Page 1: History
+          // MotoFixPage(), // Page 2: MotoFix
+          // ProfilePage(), // Page 3: Profile
+          
+          Column(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Align content to the left
+            children: [
+              // Greeting Section
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                child: Text(
+                  "Good Morning, Patricia!", // Replace with dynamic name if needed
+                  style: TextStyle(
+                    fontSize: 22, // Adjust font size
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.blackColor,
+                    // backgroundColor: AppColors.whiteColor // Use your theme's text color
+                  ),
+                ),
               ),
-            ),
-          ),
 
-          // My Wallet Card
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            color: Theme.of(context)
-                .primaryColor, // Use theme color for the top part
+              // My Wallet Card
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                color: Theme.of(context)
+                    .primaryColor, // Use theme color for the top part
 
-            child: Column(
-              children: [
-                // Top half with primary color
-                Container(
-                  width: double.infinity,
-                  color: Theme.of(context)
-                      .primaryColor, // Primary color for the top
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "My Wallet",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.whiteColor,
-                        ),
-                      ),
-                      const SizedBox(height: 8.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  children: [
+                    // Top half with primary color
+                    Container(
+                      width: double.infinity,
+                      color: Theme.of(context)
+                          .primaryColor, // Primary color for the top
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            "UGX 50,000",
+                            "My Wallet",
                             style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors
-                                  .whiteColor, // Use white for the text
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                              color: AppColors.whiteColor,
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              // Add action for viewing balance details
-                            },
-                            icon: const Icon(Icons.info, size: 24),
-                            color: AppColors
-                                .whiteColor, // Set the icon color to white
+                          const SizedBox(height: 8.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "UGX 50,000",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors
+                                      .whiteColor, // Use white for the text
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  // Add action for viewing balance details
+                                },
+                                icon: const Icon(Icons.info, size: 24),
+                                color: AppColors
+                                    .whiteColor, // Set the icon color to white
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16.0),
+                        ],
+                      ),
+                    ),
+                    // Bottom half with white color
+                    Container(
+                      width: double.infinity,
+                      color: Colors.white, // White color for the bottom half
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          // Deposit Money Button
+                          SizedBox(
+                            width: double.infinity, // Full-width button
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Add action for deposit money
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.buttonColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12.0), // Adjust height
+                              ),
+                              child: const Text(
+                                "Deposit Money",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16.0),
-                    ],
+                    ),
+                  ],
+                ),
+              ),
+
+              // Services Grid
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Number of cards in each row
+                      mainAxisSpacing: 8.0, // Space between rows
+                      crossAxisSpacing: 8.0, // Space between columns
+                      childAspectRatio: 1.0, // Aspect ratio of the cards
+                    ),
+                    itemCount:
+                        services.length, // Number of service cards to display
+                    itemBuilder: (context, index) {
+                      final service =
+                          services[index]; // Get the service at this index
+                      return _buildServiceCard(
+                        title: service[
+                            'title']!, // Use the title from the services list
+                        // subtitle: service[
+                        //     'description']!, // Use the description from the services list
+                        assetPath: service['assetPath']!,
+                        onTap: () {
+                          // Action when service card is tapped
+                          print("Service ${index + 1} tapped!");
+                        },
+                      );
+                    },
                   ),
                 ),
-                // Bottom half with white color
-                Container(
-                  width: double.infinity,
-                  color: Colors.white, // White color for the bottom half
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      // Deposit Money Button
-                      SizedBox(
-                        width: double.infinity, // Full-width button
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Add action for deposit money
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.buttonColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12.0), // Adjust height
-                          ),
-                          child: const Text(
-                            "Deposit Money",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
 
-          // Services Grid
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Number of cards in each row
-                  mainAxisSpacing: 8.0, // Space between rows
-                  crossAxisSpacing: 8.0, // Space between columns
-                  childAspectRatio: 1.0, // Aspect ratio of the cards
-                ),
-                itemCount:
-                    services.length, // Number of service cards to display
-                itemBuilder: (context, index) {
-                  final service =
-                      services[index]; // Get the service at this index
-                  return _buildServiceCard(
-                    title: service[
-                        'title']!, // Use the title from the services list
-                    // subtitle: service[
-                    //     'description']!, // Use the description from the services list
-                    assetPath: service['assetPath']!,
-                    onTap: () {
-                      // Action when service card is tapped
-                      print("Service ${index + 1} tapped!");
-                    },
-                  );
-                },
-              ),
-            ),
-          ),
         ],
       ),
 
 
+
+
+
+
+      
       bottomNavigationBar: Stack(
         children: [
           BottomNavigationBar(
@@ -260,18 +287,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 AppColors.unselectedColor, // Grey color when unselected
             items: [
               const BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
+                icon: Icon(Icons.view_list),
+                label: 'History',
               ),
               BottomNavigationBarItem(
                 icon: _buildImageIcon(
                     'assets/images/side_menu.gif', _selectedIndex == 1),
                 label: 'MotoFix',
               ),
-              BottomNavigationBarItem(
-                icon: _buildImageIcon(
-                    'assets/images/bubble-chat.gif', _selectedIndex == 2),
-                label: 'Chat with Mechanic',
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'You',
               ),
             ],
           ),
@@ -311,13 +337,12 @@ Widget _buildServiceCard({
             SizedBox(
               width: 120,
               height: 120,
-
               child: Image.asset(
                 assetPath,
                 fit: BoxFit.contain,
               ),
-              ),
-              
+            ),
+
             const SizedBox(height: 6.0),
             // Text Content
             Text(
