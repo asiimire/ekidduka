@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Profile Picture Section
-            Center(
+            const Center(
               child: CircleAvatar(
                 radius: 60,
                 backgroundImage: AssetImage('assets/images/profile.png'), // Replace with user's profile picture
@@ -24,26 +24,26 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Profile Details Section
-            Text(
+            const Text(
               "Name: Patricia", // Replace with user's name dynamically
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: AppColors.blackColor,
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               "Email: patricia@example.com", // Replace with user's email dynamically
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 color: AppColors.blackColor,
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               "Phone: +123 456 7890", // Replace with user's phone number dynamically
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 color: AppColors.blackColor,
               ),
