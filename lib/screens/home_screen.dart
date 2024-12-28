@@ -70,6 +70,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         'assetPath': 'assets/images/car_wash.png'
       },
       {
+        'title': 'Mobile Mechanic',
+        // 'description':
+        //     'Encounter a mechanical issue while on the road? Our mobile mechanic service comes to you and offers repairs on the spot, saving you the time and hassle of towing your vehicle to a repair shop.',
+        'assetPath': 'assets/images/mobile_mechanic.png'
+      },
+      {
         'title': 'Tire Repair',
         // 'description':
         //     'Flat tire? Don’t worry! We offer fast tire repair and replacement services, ensuring you/'re back on the road in no time. ',
@@ -99,12 +105,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         //     'Keep your engine running smoothly with our quick, on-site oil change service. We bring all the necessary tools to your location and complete the job quickly so you can get back on the road without delay.',
         'assetPath': 'assets/images/oil_change.png'
       },
-      {
-        'title': 'Mobile Mechanic',
-        // 'description':
-        //     'Encounter a mechanical issue while on the road? Our mobile mechanic service comes to you and offers repairs on the spot, saving you the time and hassle of towing your vehicle to a repair shop.',
-        'assetPath': 'assets/images/mobile_mechanic.png'
-      },
+      
     ];
 
     return Scaffold(
