@@ -5,16 +5,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  const CustomAppBar({super.key})
+  final Widget? title; // 'title' parameter
+
+  const CustomAppBar({super.key, this.title})
       : preferredSize = const Size.fromHeight(16.0);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        
-      ),
+      title: title, // Use the passed 'title' parameter here
+      centerTitle: true, // Center the title (optional)
       backgroundColor: AppColors.whiteColor,
     );
   }

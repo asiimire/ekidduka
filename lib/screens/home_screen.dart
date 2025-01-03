@@ -1,7 +1,3 @@
-// ignore_for_file: dead_code
-
-import 'package:ekidduka/screens/history_page.dart';
-import 'package:ekidduka/screens/profile_page.dart';
 import 'package:ekidduka/theme/colors.dart';
 import 'package:ekidduka/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +16,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   final PageController _pageController = PageController();
 
-  // 2. Define the list of pages for navigation
-  final List<Widget> _pages = [
-    HistoryPage(),  // index 0: History
-    ProfilePage(), // index 2: You
-  ];
-
+  
   
 
   @override
@@ -36,10 +27,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _onItemTapped(int index) {
       setState(() {
       _selectedIndex = index;
-      _pageController.jumpToPage(index); // Navigate to the correct page
     });
-    
-    
+
+    if (index == 0) {
+    // Navigate to the Activity Page
+    Navigator.pushNamed(context, '/activity');
+  } else if (index == 1) {
+    // Navigate to the Home Screen (or MotoFix Page)
+    Navigator.pushNamed(context, '/home');
+  } else if (index == 2) {
+    // Navigate to the Profile/You Page
+    Navigator.pushNamed(context, '/profile');
+  }
   }
   
 
@@ -125,9 +124,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           });
         },
         children: [
-          HistoryPage(), // index 0: History
-          ProfilePage(), // index 2: Profile
-  
           Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start, // Align content to the left
@@ -277,12 +273,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ],
       ),
 
-
-
-
-
-
-      
       bottomNavigationBar: Stack(
         children: [
           BottomNavigationBar(
@@ -295,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             items: [
               const BottomNavigationBarItem(
                 icon: Icon(Icons.view_list),
-                label: 'History',
+                label: 'Activity',
               ),
               BottomNavigationBarItem(
                 icon: _buildImageIcon(
